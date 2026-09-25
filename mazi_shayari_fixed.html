@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>माझी शायरी | Sairaj Santosh Hankare</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    color:#fff;
+    background:
+        radial-gradient(circle at top left,#5b21b6 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#be185d 0%,transparent 35%),
+        linear-gradient(135deg,#09001a,#17052e,#09001a);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:rgba(255,255,255,.05);
+    top:5%;
+    right:5%;
+    filter:blur(5px);
+    animation:float 6s ease-in-out infinite;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    background:rgba(236,72,153,.08);
+    bottom:5%;
+    left:5%;
+    animation:float 7s ease-in-out infinite reverse;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-25px);}
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    position:relative;
+    z-index:2;
+}
+
+.card{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    border-radius:32px;
+    padding:45px 35px;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+.logo{
+    text-align:center;
+    font-size:14px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    opacity:.7;
+    margin-bottom:10px;
+}
+
+h1{
+    text-align:center;
+    font-size:clamp(36px,7vw,68px);
+    margin-bottom:10px;
+    background:linear-gradient(90deg,#fff,#f9a8d4,#fff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.subtitle{
+    text-align:center;
+    opacity:.7;
+    margin-bottom:35px;
+    font-size:16px;
+}
+
+.categories{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:30px;
+}
+
+.category{
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    padding:13px 22px;
+    border-radius:50px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.category:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.15);
+}
+
+.category.active{
+    background:linear-gradient(135deg,#ec4899,#8b5cf6);
+    border-color:transparent;
+    box-shadow:0 8px 25px rgba(236,72,153,.3);
+}
+
+.shayari-box{
+    min-height:260px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px 25px;
+    border-radius:25px;
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.1);
+    margin-bottom:25px;
+}
+
+#shayari{
+    font-size:clamp(21px,3vw,30px);
+    line-height:1.9;
+    font-weight:500;
+    animation:fade .5s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+}
+
+.btn{
+    border:none;
+    padding:14px 25px;
+    border-radius:50px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px) scale(1.03);
+}
+
+.new-btn{
+    background:linear-gradient(135deg,#8b5cf6,#ec4899);
+    color:#fff;
+    box-shadow:0 8px 25px rgba(139,92,246,.3);
+}
+
+.like-btn{
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.2);
+    color:#fff;
+}
+
+.like-btn.liked{
+    background:linear-gradient(135deg,#ef4444,#ec4899);
+    border-color:transparent;
+}
+
+.like-count{
+    text-align:center;
+    margin-top:20px;
+    font-size:16px;
+    opacity:.75;
+}
+.search-wrap{margin:0 auto 18px;max-width:650px}
+.search-input{width:100%;padding:15px 20px;border-radius:50px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;outline:none;font-size:16px}
+.search-input::placeholder{color:rgba(255,255,255,.65)}
+.search-result-info{text-align:center;min-height:20px;margin:8px 0;font-size:13px;opacity:.75}
+.utility-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.small-btn{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;padding:10px 15px;border-radius:50px;cursor:pointer;font-size:14px}
+.favorites-panel{display:none;margin-top:16px;padding:16px;border-radius:20px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.1)}
+.favorites-panel.show{display:block}
+.fav-item{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1);line-height:1.7}
+.fav-remove{margin-top:7px;padding:6px 10px;border:0;border-radius:20px;cursor:pointer}
+.active-fav{background:linear-gradient(135deg,#f59e0b,#ef4444)!important;border-color:transparent!important}
+body.light-mode{color:#24132f;background:linear-gradient(135deg,#fff7fb,#f3e8ff,#fff)}
+body.light-mode .card{background:rgba(255,255,255,.78);border-color:rgba(60,20,80,.12)}
+body.light-mode .search-input,body.light-mode .small-btn,body.light-mode .category,body.light-mode .like-btn{color:#24132f;background:rgba(255,255,255,.75);border-color:rgba(60,20,80,.15)}
+body.light-mode .search-input::placeholder{color:rgba(36,19,47,.55)}
+@media(max-width:600px){.controls{flex-direction:column}.btn{width:100%}.utility-row{display:grid;grid-template-columns:1fr 1fr}.small-btn{width:100%}}
+
+
+.footer{
+    text-align:center;
+    margin-top:30px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.1);
+    opacity:.65;
+    font-size:14px;
+}
+
+.footer strong{
+    color:#f9a8d4;
+}
+
+@media(max-width:600px){
+
+    body{
+        padding:12px;
+    }
+
+    .card{
+        padding:30px 17px;
+        border-radius:24px;
+    }
+
+    .categories{
+        gap:8px;
+    }
+
+    .category{
+        padding:11px 15px;
+        font-size:14px;
+    }
+
+    .shayari-box{
+        min-height:280px;
+        padding:25px 15px;
+    }
+
+    .controls{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<div class="logo">Premium Shayari Collection</div>
+
+<h1>✨ माझी शायरी ✨</h1>
+
+<div class="subtitle">
+मनातील भावना शब्दांत व्यक्त करणारी सुंदर शायरी
+</div>
+
+<div class="search-wrap">
+    <input id="searchInput" class="search-input" type="text"
+           placeholder="🔍 Shayari शोधा..." oninput="searchShayari()">
+</div>
+<div id="searchResultInfo" class="search-result-info"></div>
+
+<div class="categories">
+ <button class="category active" onclick="changeCategory('love',this)">❤️ Love</button>
+ <button class="category" onclick="changeCategory('attitude',this)">😎 Attitude</button>
+ <button class="category" onclick="changeCategory('motivation',this)">🔥 Motivation</button>
+</div>
+
+<div class="shayari-box">
+ <div id="shayari"></div>
+</div>
+
+<div class="controls">
+ <button class="btn new-btn" onclick="newShayari()">✨ नवी शायरी</button>
+ <button class="btn like-btn" id="likeBtn" onclick="likeShayari()">❤️ Like</button>
+ <button class="btn like-btn" onclick="copyShayari()">📋 Copy</button>
+ <button class="btn like-btn" onclick="shareWhatsApp()">📲 WhatsApp</button>
+ <button class="btn like-btn" id="favoriteBtn" onclick="toggleFavorite()">⭐ Favourite</button>
+ <button class="btn like-btn" onclick="createShayariImage()">🖼️ Image</button>
+</div>
+
+<div class="like-count" id="likeCount">0 Likes</div>
+
+<div class="utility-row">
+ <button class="small-btn" onclick="toggleFavoritesPanel()">⭐ My Favourites</button>
+ <button class="small-btn" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
+</div>
+
+<div id="favoritesPanel" class="favorites-panel">
+ <strong>⭐ My Favourite Shayari</strong>
+ <div id="favoritesList"></div>
+</div>
+
+<div class="footer">
+ Created with ❤️ by <strong>Sairaj Santosh Hankare</strong>
+</div>
+
+</div>
+</div>
+
+<script>
+
+
+/* =========================
+   LOVE SHAYARI - 100
+========================= */
+
+const love = [
+"प्रेम शब्दांत सांगता येत नाही,<br>ते फक्त मनापासून जाणवतं. ❤️",
+"तुझ्या एका हसण्यात,<br>माझं संपूर्ण जग सामावलंय. ❤️",
+"जवळ असणं म्हणजेच प्रेम नाही,<br>मनात असणं हे खरं प्रेम आहे. ❤️",
+"तुझी आठवण आली की,<br>चेहऱ्यावर आपोआप हसू येतं. 💕",
+"काही नाती शब्दांनी नाही,<br>तर भावनांनी जोडली जातात. ❤️",
+"तुझं हसणं पाहिलं की,<br>दिवस आपोआप सुंदर होतो. ❤️",
+"तू सोबत असलीस की,<br>साधा क्षणही खास वाटतो. 💕",
+"तुझ्या आठवणींची एक वेगळीच दुनिया आहे,<br>जिथे मन रोज हरवतं. ❤️",
+"मनाला आवडलेली व्यक्ती,<br>नेहमीच खास असते. 💖",
+"तुझं नाव आठवलं की,<br>मनात एक गोड हसू उमटतं. ❤️",
+"तुझ्या शब्दांत काहीतरी जादू आहे,<br>मन पुन्हा पुन्हा तिकडेच जातं. ✨",
+"प्रेम म्हणजे मालकी नाही,<br>प्रेम म्हणजे काळजी. ❤️",
+"तुझ्या सोबतचा प्रत्येक क्षण,<br>आठवणीत जपून ठेवावासा वाटतो. 💕",
+"तुझी साथ मिळाली,<br>तर वाटही सुंदर वाटते. ❤️",
+"कधी कधी एक व्यक्तीच,<br>संपूर्ण जगासारखी वाटते. 💖",
+"तू जवळ नसलीस तरी,<br>तुझी आठवण कायम जवळ असते. ❤️",
+"मनापासून केलेलं प्रेम,<br>कधीच वाया जात नाही. 💕",
+"तुझं हसणं म्हणजे,<br>माझ्या दिवसाची सुंदर सुरुवात. ❤️",
+"काही क्षण छोटे असतात,<br>पण त्यांच्या आठवणी मोठ्या असतात. 💖",
+"तुझ्याशी बोलताना,<br>वेळ कधी निघून जातो कळतही नाही. ❤️",
+"तुझ्या आठवणीतही,<br>एक वेगळीच शांतता मिळते. 💕",
+"खरं प्रेम आवाज करत नाही,<br>ते शांतपणे मनात राहतं. ❤️",
+"तुझी काळजी घेणं,<br>हीच माझ्या प्रेमाची भाषा आहे. 💖",
+"तू हसलीस की,<br>माझं मनही हसतं. ❤️",
+"प्रेम सुंदर तेव्हा होतं,<br>जेव्हा विश्वास त्याची साथ देतो. 💕",
+"तुझ्यासोबत बोललेले शब्द,<br>मनात कायम राहतात. ❤️",
+"तुझी आठवण म्हणजे,<br>मनाला मिळालेली एक गोड भेट. 💖",
+"काही माणसं आयुष्यात येतात,<br>आणि आयुष्यच सुंदर करतात. ❤️",
+"तुझ्या सोबत चालताना,<br>रस्ता किती आहे हे कधी जाणवत नाही. 💕",
+"मनात जपलेली व्यक्ती,<br>अंतर असूनही जवळच असते. ❤️",
+"तुझ्या एका मेसेजने,<br>संपूर्ण दिवस आनंदी होतो. 💖",
+"प्रेमात शब्द कमी पडतात,<br>जेव्हा भावना खऱ्या असतात. ❤️",
+"तुझ्यासाठी केलेली छोटीशी काळजीही,<br>माझ्यासाठी मोठं प्रेम आहे. 💕",
+"तुझ्या आठवणींनी,<br>एकटेपणाही सुंदर वाटतो. ❤️",
+"तुझं नाव मनात आलं की,<br>चेहऱ्यावर हसू येतं. 💖",
+"तुझ्या सोबतचा साधा चहा देखील,<br>खास आठवण बनतो. ❤️",
+"खरं नातं अंतराने नाही,<br>विश्वासाने टिकतं. 💕",
+"तुझी साथ म्हणजे,<br>मनाला मिळालेली सुरक्षित जागा. ❤️",
+"तुझ्यावरचं प्रेम सांगण्यापेक्षा,<br>जपण्यात जास्त सुंदर आहे. 💖",
+"तू आयुष्यात आहेस,<br>हीच एक सुंदर गोष्ट आहे. ❤️",
+"तुझ्या हसण्यात,<br>माझ्या आनंदाचा छोटासा भाग आहे. 💕",
+"मनातली व्यक्ती खास असेल,<br>तर साधे क्षणही खास होतात. ❤️",
+"तुझ्या आठवणींना,<br>मन कधीच कंटाळत नाही. 💖",
+"प्रेम म्हणजे रोज नवीन कारणाने,<br>एकमेकांना समजून घेणं. ❤️",
+"तुझ्या जवळ असताना,<br>मनाला शांतता मिळते. 💕",
+"काही नाती नशिबाने मिळतात,<br>आणि मनापासून जपावी लागतात. ❤️",
+"तुझ्या एका हसण्याची किंमत,<br>माझ्यासाठी खूप मोठी आहे. 💖",
+"तू असलीस की,<br>सगळं काही थोडं अधिक सुंदर वाटतं. ❤️",
+"मनाला जिथे शांतता मिळते,<br>तिथेच खरं प्रेम असतं. 💕",
+"तुझ्याशी जोडलेली प्रत्येक आठवण,<br>मनासाठी मौल्यवान आहे. ❤️",
+"तुझ्या आवाजातही,<br>एक वेगळीच आपुलकी जाणवते. 💖",
+"तू समजून घेतलंस,<br>हेच प्रेमाचं सर्वात सुंदर रूप आहे. ❤️",
+"प्रेमात मोठ्या वचनांपेक्षा,<br>छोटी काळजी जास्त महत्त्वाची असते. 💕",
+"तुझ्या सोबतचा प्रत्येक दिवस,<br>मनाच्या वहीत जपून ठेवावा वाटतो. ❤️",
+"तुझ्या आठवणींचा सुगंध,<br>मनात कायम राहतो. 💖",
+"तू हसतेस तेव्हा,<br>जग थोडं अधिक सुंदर वाटतं. ❤️",
+"खरं प्रेम मनाला बदलत नाही,<br>ते मनाला सुंदर बनवतं. 💕",
+"तुझी साथ मिळाली,<br>तर कठीण वाटाही सोप्या वाटतात. ❤️",
+"तुझ्या एका शब्दानेही,<br>मनाला खूप आधार मिळतो. 💖",
+"प्रेम म्हणजे एकमेकांना बदलणं नाही,<br>तर एकमेकांना स्वीकारणं. ❤️",
+"तुझ्यासोबत शांत बसणंही,<br>कधी कधी खूप काही सांगून जातं. 💕",
+"तुझ्या आठवणी मनात असतील,<br>तर अंतर कधीच मोठं नसतं. ❤️",
+"तुझं हसू जपावं,<br>असं मन रोज सांगतं. 💖",
+"तुझ्यासोबतचा प्रत्येक क्षण,<br>मनाला पुन्हा पुन्हा जगावासा वाटतो. ❤️",
+"तुझी काळजी घेणं,<br>माझ्यासाठी कर्तव्य नाही तर आनंद आहे. 💕",
+"प्रेमात सुंदर चेहऱ्यापेक्षा,<br>सुंदर मन महत्त्वाचं असतं. ❤️",
+"तुझ्या सोबत असताना,<br>मनाला घाई करावीशी वाटत नाही. 💖",
+"तू जवळ असताना,<br>मनातील चिंता दूर होतात. ❤️",
+"तुझ्या आठवणींना,<br>मनात एक खास कोपरा आहे. 💕",
+"प्रेमाची खरी ओळख,<br>कठीण वेळेत होते. ❤️",
+"तुझं हसणं पाहणं,<br>ही माझ्या दिवसाची छोटीशी खुशी आहे. 💖",
+"मन जिथे निवांत होतं,<br>तिथेच प्रेमाची सुरुवात होते. ❤️",
+"तुझ्या सोबतचा प्रवास,<br>मंजिलपेक्षा सुंदर वाटतो. 💕",
+"तुझं नाव घेताच,<br>मनात गोड आठवणी जाग्या होतात. ❤️",
+"काही व्यक्ती भेटतात,<br>आणि मनाला कायमच्या आपल्याशा होतात. 💖",
+"तुझ्यासाठी वेळ काढणं,<br>माझ्यासाठी वेळ वाया घालवणं नाही. ❤️",
+"तुझी साथ म्हणजे,<br>आयुष्याला मिळालेली सुंदर दिशा. 💕",
+"प्रेम टिकतं तेव्हा,<br>जेव्हा अहंकारापेक्षा नातं मोठं असतं. ❤️",
+"तुझ्या मनाची काळजी घेणं,<br>हीच माझ्या प्रेमाची खरी ओळख. 💖",
+"तू माझ्या आठवणीत आहेस,<br>म्हणून प्रत्येक दिवस खास आहे. ❤️",
+"तुझ्यासोबतचे साधे क्षण,<br>सर्वात सुंदर आठवणी बनतात. 💕",
+"प्रेमाला शब्दांची गरज नसते,<br>मनाला मनाची भाषा कळते. ❤️",
+"तुझं हसणं जपण्यासाठी,<br>हजार कारणं शोधावीशी वाटतात. 💖",
+"तुझ्या सोबत असताना,<br>मन स्वतःला पूर्ण वाटतं. ❤️",
+"विश्वास असेल तर,<br>नातं अंतरावरही सुंदर राहतं. 💕",
+"तू आयुष्यात आलीस,<br>आणि साध्या दिवसांना रंग मिळाले. ❤️",
+"तुझी आठवण म्हणजे,<br>मनावर उमटलेलं सुंदर चित्र. 💖",
+"तुझ्या एका भेटीने,<br>पूर्ण दिवस आनंदी होतो. ❤️",
+"प्रेम म्हणजे रोज नव्याने,<br>एकमेकांची निवड करणं. 💕",
+"तुझी साथ असेल तर,<br>मनाला कोणत्याही वादळाची भीती नाही. ❤️",
+"तुझ्या मनातली जागा,<br>माझ्यासाठी जगातील सर्वात खास जागा आहे. 💖",
+"तुझ्यासोबत बोलणं,<br>मनासाठी एका सुंदर संगीतासारखं आहे. ❤️",
+"खरं प्रेम नेहमी,<br>आदर आणि विश्वासाने वाढतं. 💕",
+"तुझं हसणं माझ्यासाठी,<br>एक छोटंसं सुख आहे. ❤️",
+"मनातली व्यक्ती जवळ असेल,<br>तर आयुष्य सुंदर वाटतं. 💖",
+"तुझ्या आठवणींचा प्रवास,<br>कधीच संपत नाही. ❤️",
+"प्रेमात जिंकण्यापेक्षा,<br>नातं जपणं महत्त्वाचं असतं. 💕",
+"तू समोर असलीस की,<br>मनातील शब्दही हसतात. ❤️",
+"तुझ्या सोबत घालवलेला वेळ,<br>मनाची सर्वात सुंदर बचत आहे. 💖",
+"तुझी काळजी घेणं,<br>माझ्या मनाला आवडतं. ❤️",
+"प्रेम सुंदर असतं,<br>जेव्हा दोघेही मनापासून जपतात. 💕"
+];
+
+/* =========================
+   ATTITUDE SHAYARI - 100
+========================= */
+
+const attitude = [
+"आम्ही बदलत नाही,<br>फक्त वेळेनुसार स्वतःला सिद्ध करतो. 😎",
+"ओळख निर्माण करायला वेळ लागतो,<br>पण टिकवायला स्वभाव पुरतो. 🔥",
+"जग काय म्हणेल याचा विचार नाही,<br>मला माझं काय करायचंय ते माहिती आहे. 😎",
+"माझी शांतता कमजोरी नाही,<br>योग्य वेळेची वाट पाहतोय. 👑",
+"ज्यांना कमी समजलं,<br>त्यांनाच एक दिवस उत्तर मिळेल. 🔥",
+"आमचा अंदाज वेगळा आहे,<br>म्हणून गर्दीतही वेगळे दिसतो. 😎",
+"स्वतःची ओळख स्वतः बनवायची,<br>दुसऱ्यांच्या सावलीत नाही. 🔥",
+"आम्ही कोणाशी स्पर्धा करत नाही,<br>आमचा प्रवास आमचा आहे. 👑",
+"जिंकण्याची सवय नाही,<br>पण हार मानण्याचीही नाही. 😎",
+"नाव छोटं असलं तरी,<br>स्वप्नं मोठी आहेत. 🔥",
+"आमची किंमत वेळ सांगेल,<br>आज फक्त शांत राहूया. 😎",
+"स्वभाव साधा आहे,<br>पण स्वतःची किंमत माहिती आहे. 👑",
+"लोक बदलतात म्हणून,<br>आम्ही स्वतःला बदलत नाही. 🔥",
+"आमचा attitude दाखवायची गरज नाही,<br>वागण्यातून तो दिसतो. 😎",
+"जिथे आदर नाही,<br>तिथे उपस्थितीचीही गरज नाही. 👑",
+"स्वतःवर विश्वास असेल,<br>तर गर्दीची गरज नसते. 🔥",
+"आम्ही शांत असतो,<br>कारण प्रत्येक उत्तर शब्दांत द्यायचं नसतं. 😎",
+"जगण्याची style साधी,<br>पण विचार मोठे. 👑",
+"कुणाला impress करायचं नाही,<br>स्वतःला improve करायचं आहे. 🔥",
+"आमची ओळख कुणाच्या नावाने नाही,<br>आमच्या कामाने आहे. 😎",
+"ज्यांना आमची किंमत नाही,<br>त्यांच्यासाठी वेळही नाही. 👑",
+"आम्ही मागे वळून पाहत नाही,<br>कारण पुढे जायचं असतं. 🔥",
+"स्वाभिमान जपला,<br>म्हणून गर्दी कमी झाली तरी चालेल. 😎",
+"शांत राहणं म्हणजे हार नाही,<br>ती स्वतःवरची पकड आहे. 👑",
+"आम्ही परिस्थितीवर रडत नाही,<br>तिला बदलण्याचा प्रयत्न करतो. 🔥",
+"नजर खाली नाही,<br>कारण ध्येय नेहमी वर आहे. 😎",
+"लोक काय म्हणतात यापेक्षा,<br>आपण काय करतो ते महत्त्वाचं. 👑",
+"आमची वाट वेगळी आहे,<br>म्हणूनच आमची गोष्ट वेगळी आहे. 🔥",
+"स्वतःची किंमत जाणणाऱ्याला,<br>मान्यता मागावी लागत नाही. 😎",
+"आम्ही साधे आहोत,<br>पण साधारण नाही. 👑",
+"काळ बदलतो,<br>आणि काळासोबत परिस्थितीही बदलते. 🔥",
+"आमच्या शांततेला कमी समजू नका,<br>ती खूप काही सांगते. 😎",
+"दुसऱ्यांच्या मतावर आयुष्य नाही,<br>स्वतःच्या निर्णयावर विश्वास आहे. 👑",
+"आम्ही थांबणार नाही,<br>जोपर्यंत ध्येय गाठत नाही. 🔥",
+"स्वाभिमान ठेवला की,<br>काही नाती आपोआप दूर जातात. 😎",
+"आमचा मार्ग कठीण असेल,<br>पण तो आमचा स्वतःचा आहे. 👑",
+"जिंकणाऱ्याची ओळख,<br>त्याच्या संयमातून होते. 🔥",
+"आम्हाला कमी समजणं,<br>ही दुसऱ्यांची चूक आहे. 😎",
+"आम्ही परिस्थितीचे गुलाम नाही,<br>परिस्थिती बदलण्याची जिद्द आहे. 👑",
+"लोकांपेक्षा ध्येय मोठं,<br>म्हणून लक्ष नेहमी पुढे. 🔥",
+"स्वतःशी प्रामाणिक राहणं,<br>हा आमचा attitude आहे. 😎",
+"गर्दीत मिसळण्यापेक्षा,<br>स्वतःची ओळख बनवणं आवडतं. 👑",
+"जिथे आदर मिळतो,<br>तिथेच आमची उपस्थिती असते. 🔥",
+"नशिबावर विश्वास आहे,<br>पण मेहनतीवर जास्त. 😎",
+"आम्ही पडतो,<br>पण पुन्हा उभे राहतो. 👑",
+"कुणाला कमी दाखवून,<br>स्वतः मोठं होता येत नाही. 🔥",
+"आमची स्पर्धा कालच्या स्वतःशी आहे. 😎",
+"स्वतःची किंमत कळली की,<br>अयोग्य लोकांची गरज उरत नाही. 👑",
+"ध्येय स्पष्ट असेल,<br>तर आवाजांची पर्वा राहत नाही. 🔥",
+"आम्ही उत्तर देत नाही,<br>वेळ उत्तर देतो. 😎",
+"जिंकण्यासाठी गर्दी नको,<br>जिद्द पुरेशी आहे. 👑",
+"आमची चाल हळू असेल,<br>पण दिशा योग्य आहे. 🔥",
+"स्वतःवर विश्वास ठेव,<br>जग आपोआप विश्वास ठेवेल. 😎",
+"आम्ही कोणाची नक्कल करत नाही,<br>स्वतःची style बनवतो. 👑",
+"आमचं ध्येय मोठं,<br>म्हणून excuses छोटे. 🔥",
+"जिथे मान नाही,<br>तिथे थांबणंही नाही. 😎",
+"स्वतःला सिद्ध करण्यासाठी,<br>फक्त वेळ आणि मेहनत लागते. 👑",
+"आमचा attitude कपड्यांत नाही,<br>विचारांत आहे. 🔥",
+"ज्यांनी दुर्लक्ष केलं,<br>त्यांना उत्तर यश देईल. 😎",
+"आम्ही बोलण्यापेक्षा,<br>करण्यात विश्वास ठेवतो. 👑",
+"गप्प बसतो म्हणजे हरलो नाही,<br>फक्त योग्य वेळ शोधतोय. 🔥",
+"आमचा आत्मविश्वास,<br>आमच्या अनुभवातून आला आहे. 😎",
+"स्वतःची वाट निवडली,<br>म्हणून प्रवास वेगळा झाला. 👑",
+"यशाची घाई नाही,<br>पण थांबायचंही नाही. 🔥",
+"आमची ओळख आमच्या कामातून,<br>आणि काम आमच्या जिद्दीमधून. 😎",
+"लोक बदलतील,<br>पण ध्येय बदलणार नाही. 👑",
+"स्वाभिमान जपणं,<br>हा attitude नाही तर संस्कार आहे. 🔥",
+"जिंकण्यापेक्षा,<br>स्वतःला हरू न देणं महत्त्वाचं. 😎",
+"आम्ही वेगळे आहोत,<br>कारण आम्ही स्वतःसारखे आहोत. 👑",
+"जगाच्या आवाजापेक्षा,<br>मनाचा आवाज मोठा ठेवतो. 🔥",
+"आम्हाला ओळखायला,<br>वेळ द्यावा लागतो. 😎",
+"आमच्या वाटेत अडथळे आहेत,<br>पण पावलं थांबलेली नाहीत. 👑",
+"कुणाच्या परवानगीची गरज नाही,<br>स्वप्नं आमची आहेत. 🔥",
+"आम्ही साधेपणातही,<br>एक वेगळीच ओळख ठेवतो. 😎",
+"स्वतःचा आदर करणारा,<br>दुसऱ्याचाही आदर करतो. 👑",
+"आमची ताकद आवाजात नाही,<br>आमच्या कृतीत आहे. 🔥",
+"ज्यांना वाटतं आम्ही थांबू,<br>त्यांनी आमची जिद्द पाहिलेली नाही. 😎",
+"वेळ लागेल,<br>पण परिणाम नक्की दिसेल. 👑",
+"आमची दिशा स्पष्ट आहे,<br>म्हणून गर्दीचा रस्ता नको. 🔥",
+"आम्ही स्वतःला सिद्ध करतो,<br>स्पष्टीकरण देत बसत नाही. 😎",
+"यश आलं तरी जमिनीवर,<br>आणि अपयश आलं तरी ध्येयावर. 👑",
+"आमची story अजून बाकी आहे. 🔥",
+"जगण्याची पद्धत स्वतःची,<br>आणि निर्णयही स्वतःचे. 😎",
+"स्वप्नं मोठी असतील,<br>तर टीकाही मोठी असते. 👑",
+"आम्ही टीकेला घाबरत नाही,<br>तीही प्रवासाचा भाग आहे. 🔥",
+"शांत चेहरा,<br>मोठी स्वप्नं आणि मजबूत जिद्द. 😎",
+"कुणाशी तुलना नाही,<br>कारण आमची journey वेगळी आहे. 👑",
+"आज शांत आहोत,<br>उद्या परिणाम बोलतील. 🔥",
+"स्वतःची ओळख बनवण्यासाठी,<br>स्वतःवर काम करावं लागतं. 😎",
+"आम्ही हरलो तरी शिकतो,<br>आणि शिकलो तर जिंकतो. 👑",
+"दुसऱ्यांच्या टाळ्यांपेक्षा,<br>स्वतःचं समाधान महत्त्वाचं. 🔥",
+"आमच्या स्वप्नांना,<br>आमच्यापेक्षा कोणीच थांबवू शकत नाही. 😎",
+"काळजी करू नका,<br>वेळ आमचीही येईल. 👑",
+"आमची मेहनत शांत आहे,<br>पण परिणाम मोठा असेल. 🔥",
+"आम्ही स्वतःचा रस्ता तयार करतो,<br>पावलांमागे पाऊल ठेवत नाही. 😎",
+"आदर मिळवायचा असेल,<br>तर आधी स्वतःचा आदर करा. 👑",
+"ध्येयाच्या मागे धावताना,<br>गर्दी मागे राहते. 🔥",
+"आमची ओळख आज छोटी असेल,<br>पण स्वप्न मोठं आहे. 😎",
+"आम्ही बदलत्या जगात,<br>स्वतःची value जपतो. 👑",
+"कुणाच्या approval पेक्षा,<br>स्वतःचा विश्वास महत्त्वाचा. 🔥"
+];
+
+/* =========================
+   MOTIVATION SHAYARI - 100
+========================= */
+
+const motivation = [
+"पडलो तरी चालेल,<br>पण प्रयत्न सोडायचे नाहीत. 💪",
+"स्वप्न मोठं ठेवा,<br>कारण मेहनत करण्याची ताकद तुमच्यात आहे. 🔥",
+"आजची मेहनत,<br>उद्याचं यश ठरवतं. 🚀",
+"हळूहळू का होईना,<br>पण रोज एक पाऊल पुढे टाका. 💪",
+"अडचणी कितीही असू देत,<br>हार मानायची नाही. 🔥",
+"स्वप्नं पाहणारे अनेक असतात,<br>पण त्यासाठी मेहनत करणारे कमी असतात. 🚀",
+"वेळ कठीण आहे,<br>पण तुम्ही त्याहून मजबूत आहात. 💪",
+"आजचा संघर्ष,<br>उद्याची प्रेरणा बनेल. 🔥",
+"यशाला shortcut नसतो,<br>पण मेहनतीला परिणाम नक्की असतो. 🚀",
+"स्वतःवर विश्वास ठेवा,<br>सुरुवात छोटी असली तरी चालेल. 💪",
+"एक पाऊल रोज,<br>मंजिल जवळ आणतं. 🔥",
+"अपयश म्हणजे शेवट नाही,<br>तो पुन्हा प्रयत्न करण्याचा धडा आहे. 🚀",
+"थांबू नका,<br>तुमची वेळ नक्की येईल. 💪",
+"ध्येय मोठं असेल,<br>तर मेहनतही मोठी असावी. 🔥",
+"काल गेला,<br>आजपासून पुन्हा सुरुवात करा. 🚀",
+"तुमची मेहनत कुणाला दिसत नसेल,<br>तरी ती वाया जात नाही. 💪",
+"स्वप्नं सत्यात आणायची असतील,<br>तर कृती करावी लागते. 🔥",
+"अडथळे वाटेत असतात,<br>मंजिल थांबवण्यासाठी नाही. 🚀",
+"जिंकण्यापूर्वी,<br>स्वतःच्या भीतीवर विजय मिळवा. 💪",
+"छोटी सुरुवातही,<br>मोठ्या बदलाची सुरुवात असते. 🔥",
+"आजचा एक तास,<br>उद्याचं आयुष्य बदलू शकतो. 🚀",
+"स्वतःला कमी समजू नका,<br>तुमच्यात क्षमता आहे. 💪",
+"प्रयत्न करत राहा,<br>कारण सातत्याची ताकद मोठी असते. 🔥",
+"ध्येयापासून लक्ष हटू देऊ नका,<br>रस्ता कितीही कठीण असला तरी. 🚀",
+"यश मिळवायचं असेल,<br>तर कारणं नाही उपाय शोधा. 💪",
+"आज कठीण वाटतंय,<br>पण उद्या याच दिवसाचा अभिमान वाटेल. 🔥",
+"मन मजबूत ठेवा,<br>परिस्थिती कायमची नसते. 🚀",
+"स्वप्नांसाठी वेळ द्या,<br>कारण वेळ दिल्याशिवाय स्वप्नं पूर्ण होत नाहीत. 💪",
+"एक दिवस नाही,<br>दररोज स्वतःला सुधारायचं आहे. 🔥",
+"हार ही तात्पुरती असते,<br>जिद्द कायमची असते. 🚀",
+"जिथे लोक थांबतात,<br>तिथून तुमची सुरुवात होऊ शकते. 💪",
+"स्वतःशी स्पर्धा करा,<br>कालपेक्षा आज चांगलं व्हा. 🔥",
+"कठीण दिवसही जातात,<br>फक्त धीर सोडू नका. 🚀",
+"तुमचा प्रवास तुमचा आहे,<br>तुलना करून तो छोटा करू नका. 💪",
+"आजचा प्रयत्न,<br>उद्याचा आत्मविश्वास बनतो. 🔥",
+"यशासाठी talent पेक्षा,<br>सातत्य जास्त महत्त्वाचं असतं. 🚀",
+"एकदा पडल्याने,<br>प्रवास संपत नाही. 💪",
+"स्वप्नांना तारीख द्या,<br>आणि त्यासाठी योजना करा. 🔥",
+"तुमच्या क्षमतेवर विश्वास ठेवा,<br>सुरुवात स्वतःपासून होते. 🚀",
+"काहीही अशक्य वाटतं,<br>जोपर्यंत ते पूर्ण होत नाही. 💪",
+"जिद्द असेल,<br>तर मार्ग सापडतो. 🔥",
+"आज मेहनत करा,<br>उद्या त्याचा फायदा होईल. 🚀",
+"भीतीच्या पलीकडेच,<br>नवीन संधी असतात. 💪",
+"स्वप्नं मोठी असू द्या,<br>पावलं छोटी असली तरी चालतील. 🔥",
+"सातत्याने केलेला छोटा प्रयत्न,<br>मोठा परिणाम देऊ शकतो. 🚀",
+"तुमची सुरुवात कुठून झाली,<br>यापेक्षा तुम्ही कुठे पोहोचता हे महत्त्वाचं. 💪",
+"अपयशातून शिका,<br>पण तिथेच थांबू नका. 🔥",
+"आज स्वतःवर काम करा,<br>उद्या जग तुमच्याकडे पाहील. 🚀",
+"मनात ध्येय,<br>आणि पावलांत सातत्य ठेवा. 💪",
+"अडचण म्हणजे थांबण्याचं कारण नाही,<br>ती शिकण्याची संधी आहे. 🔥",
+"जिंकण्याची सुरुवात,<br>स्वतःवर विश्वास ठेवण्यापासून होते. 🚀",
+"तुमची मेहनत तुमची ओळख बनेल. 💪",
+"थोडं उशीर झालं तरी चालेल,<br>पण हार मानू नका. 🔥",
+"प्रत्येक दिवस,<br>नवीन संधी घेऊन येतो. 🚀",
+"ध्येय समोर ठेवा,<br>आणि distractions मागे ठेवा. 💪",
+"कठीण काळात घेतलेली मेहनत,<br>सर्वात मौल्यवान असते. 🔥",
+"तुम्ही कालपेक्षा आज चांगले असाल,<br>तर तुम्ही जिंकत आहात. 🚀",
+"प्रयत्नांची संख्या नाही,<br>सातत्याची ताकद महत्त्वाची आहे. 💪",
+"स्वप्न पूर्ण होईपर्यंत,<br>प्रयत्न सुरू ठेवा. 🔥",
+"तुमच्या भविष्याची सुरुवात,<br>आजच्या निर्णयातून होते. 🚀",
+"मनात सकारात्मक विचार,<br>आणि हातात मेहनत ठेवा. 💪",
+"जग बदलण्याआधी,<br>स्वतःला बदलायला सुरुवात करा. 🔥",
+"लहान विजय साजरे करा,<br>तेच मोठ्या विजयाची पायरी असतात. 🚀",
+"यशाला वेळ लागतो,<br>म्हणून संयम ठेवा. 💪",
+"प्रत्येक सकाळ,<br>नवीन सुरुवातीची संधी आहे. 🔥",
+"आजचा संघर्ष,<br>उद्याची ताकद बनेल. 🚀",
+"स्वतःच्या स्वप्नांसाठी,<br>स्वतःलाच उभं राहावं लागतं. 💪",
+"किती वेळा पडलात हे महत्त्वाचं नाही,<br>किती वेळा उठलात हे महत्त्वाचं आहे. 🔥",
+"संधीची वाट पाहू नका,<br>स्वतः संधी तयार करा. 🚀",
+"तुमच्या क्षमतेला सीमा नाही,<br>फक्त प्रयत्नांची दिशा योग्य ठेवा. 💪",
+"एक दिवस तुमची मेहनत,<br>तुमची ओळख बनेल. 🔥",
+"जे आज अशक्य वाटतं,<br>ते उद्या तुमचं यश असू शकतं. 🚀",
+"ध्येयावर विश्वास ठेवा,<br>प्रवासावर संयम ठेवा. 💪",
+"वेग कमी असला तरी,<br>दिशा योग्य असावी. 🔥",
+"स्वतःवर केलेली गुंतवणूक,<br>कधीच वाया जात नाही. 🚀",
+"मन थकलं तरी,<br>ध्येय विसरू नका. 💪",
+"आजची शिस्त,<br>उद्याचं स्वातंत्र्य देते. 🔥",
+"तुमचा प्रयत्न छोटा असला,<br>तरी त्याची सुरुवात मोठी असते. 🚀",
+"यश मिळवण्यासाठी,<br>दररोज स्वतःला जिंकावं लागतं. 💪",
+"कठीण प्रश्नांना घाबरू नका,<br>त्यातूनच मोठे धडे मिळतात. 🔥",
+"तुमच्या ध्येयाला,<br>तुमच्या excuses पेक्षा मोठं बनवा. 🚀",
+"प्रत्येक चुका,<br>पुढच्या प्रयत्नासाठी मार्गदर्शक असतात. 💪",
+"जिद्द जिवंत असेल,<br>तर संधी कधीच संपत नाही. 🔥",
+"आज सुरुवात करा,<br>perfect वेळेची वाट पाहू नका. 🚀",
+"तुमचं भविष्य,<br>आजच्या मेहनतीवर उभं आहे. 💪",
+"स्वतःला सिद्ध करण्यासाठी,<br>फक्त एक संधी पुरेशी असते. 🔥",
+"ध्येय मोठं ठेवा,<br>मन त्याहून मोठं ठेवा. 🚀",
+"थांबण्याऐवजी,<br>थोडा वेग कमी करा पण पुढे चला. 💪",
+"तुमची कथा अजून संपलेली नाही,<br>सर्वात सुंदर पानं पुढे आहेत. 🔥",
+"मेहनत शांत असते,<br>पण तिचा परिणाम मोठा असतो. 🚀",
+"विश्वास ठेवा,<br>तुम्ही विचार करता त्यापेक्षा अधिक सक्षम आहात. 💪",
+"ध्येयासाठी दिलेला वेळ,<br>कधीच वाया जात नाही. 🔥",
+"प्रत्येक छोटं पाऊल,<br>मोठ्या स्वप्नाच्या जवळ नेतं. 🚀",
+"स्वतःवर विश्वास ठेवा,<br>आणि सुरुवात आजच करा. 💪",
+"यशाची वाट कठीण असेल,<br>म्हणूनच तिची किंमत जास्त असते. 🔥",
+"तुमची मेहनत,<br>तुमच्या भविष्यासाठीचं उत्तर आहे. 🚀",
+"मनात जिद्द असेल,<br>तर परिस्थितीपेक्षा स्वप्नं मोठी होतात. 💪",
+"आजचा दिवस वाया घालवू नका,<br>तो परत येणार नाही. 🔥",
+"प्रत्येक सकाळी स्वतःला सांगा,<br>मी कालपेक्षा आज चांगला होणार. 🚀",
+"तुम्ही सुरुवात केली,<br>हीच पहिली मोठी जिंक आहे. 💪",
+"जिथे इच्छा असते,<br>तिथे मार्ग नक्की सापडतो. 🔥",
+"स्वप्नं मनात ठेवू नका,<br>त्यांना कृतीत आणा. 🚀",
+"तुमची मेहनत कदाचित आज शांत असेल,<br>पण उद्या ती बोलणार आहे. 💪",
+"ध्येय गाठण्यासाठी,<br>दररोज थोडं पुढे जाणं पुरेसं आहे. 🔥",
+"हार मानण्याआधी,<br>एकदा अजून प्रयत्न करा. 🚀",
+"तुमची वेळ येईल,<br>फक्त तुमचा प्रयत्न थांबू देऊ नका. 💪"
+];
+
+
+/* =========================
+   WEBSITE LOGIC
+========================= */
+
+const categories = { love: love, attitude: attitude, motivation: motivation };
+let currentCategory = "love";
+let currentIndex = -1;
+let likes = 0;
+
+function save(key, value){
+    try { localStorage.setItem(key, value); } catch(e) {}
+}
+function load(key, fallback){
+    try {
+        const v = localStorage.getItem(key);
+        return v === null ? fallback : v;
+    } catch(e) { return fallback; }
+}
+
+let favorites = JSON.parse(load("maziFavorites","[]"));
+
+function getNewIndex(category){
+    const list = categories[category];
+    if (!list || !list.length) return 0;
+    let i;
+    do { i = Math.floor(Math.random() * list.length); }
+    while (list.length > 1 && i === currentIndex);
+    currentIndex = i;
+    return i;
+}
+
+function showShayari(){
+    const list = categories[currentCategory];
+    const index = getNewIndex(currentCategory);
+    document.getElementById("shayari").innerHTML = list[index];
+    document.getElementById("likeBtn").className = "btn like-btn";
+    document.getElementById("likeBtn").innerHTML = "❤️ Like";
+    document.getElementById("likeCount").innerHTML = likes + " Likes";
+    document.getElementById("searchResultInfo").innerHTML = "";
+    document.getElementById("searchInput").value = "";
+    updateFavoriteButton();
+}
+
+function changeCategory(category, button){
+    currentCategory = category;
+    document.querySelectorAll(".category").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+    showShayari();
+}
+
+function newShayari(){ showShayari(); }
+
+function likeShayari(){
+    likes++;
+    document.getElementById("likeBtn").classList.add("liked");
+    document.getElementById("likeBtn").innerHTML = "❤️ Liked!";
+    document.getElementById("likeCount").innerHTML = likes + " Likes ❤️";
+}
+
+function getText(){
+    return document.getElementById("shayari").innerText.trim();
+}
+
+function copyShayari(){
+    const text = getText();
+    // Works on local HTML files too; uses Clipboard API first, then a textarea fallback.
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => alert("📋 Shayari copy झाली!"))
+        .catch(() => fallbackCopy(text));
+    } else {
+        fallbackCopy(text);
+    }
+}
+function fallbackCopy(text){
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    area.select();
+    try {
+        document.execCommand("copy");
+        alert("📋 Shayari copy झाली!");
+    } catch(e) {
+        alert("Copy करता आलं नाही. Shayari select करून Ctrl+C वापर.");
+    }
+    document.body.removeChild(area);
+}
+
+function shareWhatsApp(){
+    const text = getText();
+    const url = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(url, "_blank");
+}
+
+function toggleFavorite(){
+    const text = getText();
+    if (!text || text.includes("Shayari सापडली नाही")) return;
+    const i = favorites.indexOf(text);
+    if(i >= 0) favorites.splice(i,1);
+    else favorites.unshift(text);
+    save("maziFavorites", JSON.stringify(favorites));
+    updateFavoriteButton();
+    renderFavorites();
+}
+
+function updateFavoriteButton(){
+    const btn = document.getElementById("favoriteBtn");
+    const isFav = favorites.includes(getText());
+    btn.classList.toggle("active-fav", isFav);
+    btn.innerHTML = isFav ? "⭐ Saved" : "⭐ Favourite";
+}
+
+function renderFavorites(){
+    const box = document.getElementById("favoritesList");
+    if(!favorites.length){
+        box.innerHTML = '<p style="opacity:.7;margin-top:10px">अजून Favourite Shayari नाही.</p>';
+        return;
+    }
+    box.innerHTML = favorites.map((x,i) =>
+        '<div class="fav-item">' + x + '<br><button class="fav-remove" onclick="removeFavorite('+i+')">❌ Remove</button></div>'
+    ).join("");
+}
+function removeFavorite(i){
+    favorites.splice(i,1);
+    save("maziFavorites", JSON.stringify(favorites));
+    renderFavorites();
+    updateFavoriteButton();
+}
+function toggleFavoritesPanel(){
+    document.getElementById("favoritesPanel").classList.toggle("show");
+    renderFavorites();
+}
+
+function searchShayari(){
+    const q = document.getElementById("searchInput").value.trim().toLowerCase();
+    const info = document.getElementById("searchResultInfo");
+    if(!q){ showShayari(); return; }
+
+    const all = [
+        ...love.map(x=>({text:x,cat:"Love"})),
+        ...attitude.map(x=>({text:x,cat:"Attitude"})),
+        ...motivation.map(x=>({text:x,cat:"Motivation"}))
+    ];
+    const found = all.filter(x => x.text.replace(/<br>/g," ").toLowerCase().includes(q));
+
+    if(found.length){
+        document.getElementById("shayari").innerHTML = found[0].text;
+        info.innerHTML = "🔎 " + found.length + " Shayari सापडल्या";
+        updateFavoriteButton();
+    }else{
+        document.getElementById("shayari").innerHTML = "😔 Shayari सापडली नाही.<br>दुसरा शब्द लिहा.";
+        info.innerHTML = "0 Shayari";
+    }
+}
+
+function toggleTheme(){
+    document.body.classList.toggle("light-mode");
+    save("maziTheme", document.body.classList.contains("light-mode") ? "light" : "dark");
+}
+
+function createShayariImage(){
+    const text = getText();
+    if(!text || text.includes("Shayari सापडली नाही")) return;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 1200; canvas.height = 800;
+    const ctx = canvas.getContext("2d");
+
+    const g = ctx.createLinearGradient(0,0,1200,800);
+    g.addColorStop(0,"#17052e"); g.addColorStop(.5,"#5b21b6"); g.addColorStop(1,"#be185d");
+    ctx.fillStyle = g; ctx.fillRect(0,0,1200,800);
+
+    ctx.fillStyle="#fff"; ctx.textAlign="center";
+    ctx.font="bold 36px Arial"; ctx.fillText("✨ माझी शायरी ✨",600,110);
+
+    const words = text.replace(/\s+/g," ").split(" ");
+    const lines=[]; let line="";
+    ctx.font="30px Arial";
+    words.forEach(w=>{
+        const test=line ? line+" "+w : w;
+        if(ctx.measureText(test).width>950){ lines.push(line); line=w; }
+        else line=test;
+    });
+    if(line) lines.push(line);
+
+    const start=350-(lines.length-1)*25;
+    lines.forEach((l,i)=>ctx.fillText(l,600,start+i*58));
+    ctx.font="20px Arial"; ctx.fillText("mazi shayari",600,720);
+
+    const a=document.createElement("a");
+    a.download="mazi-shayari.png";
+    a.href=canvas.toDataURL("image/png");
+    a.click();
+}
+
+if(load("maziTheme","dark")==="light") document.body.classList.add("light-mode");
+showShayari();
+renderFavorites();
+
+</script>
+
+</body>
+</html>
